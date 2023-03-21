@@ -8,6 +8,8 @@ const welcome = (req, res) => {
   res.send('Welcome dude, have fun :)');
 };
 
+app.use(express.json());
+
 app.get('/', welcome);
 
 const movieHandlers = require('./movieHandlers');
@@ -18,6 +20,9 @@ app.get('/api/movies/:id', movieHandlers.getMovieById);
 
 app.get('/api/users', userHandlers.getUsers);
 app.get('/api/users/:id', userHandlers.getUsersById);
+
+app.post('/api/movies', movieHandlers.postMovie);
+app.post('/api/users', userHandlers.postUsers);
 
 app.listen(port, (err) => {
   if (err) {
