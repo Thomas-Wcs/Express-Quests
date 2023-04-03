@@ -58,8 +58,19 @@ const postUsers = (req, res) => {
 };
 
 const getUsers = (req, res) => {
+  let sql = 'select * from users';
+  const sqlValues = [];
+
+  if (req.query.language != null) {
+    sql += ' WHERE language = ?';
+    sqlValues.push(req.query.language);
+  } else if (req.query.city != null) {
+    sql += ' WHERE city = ?';
+    sqlValues.push(req.query.city);
+  }
+
   database
-    .query('select * from users')
+    .query(sql, sqlValues)
     .then(([users]) => {
       res.json(users);
     })
