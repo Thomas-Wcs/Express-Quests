@@ -44,6 +44,7 @@ const updateUser = (req, res) => {
 const postUsers = (req, res) => {
   const { firstname, lastname, email, city, language, hashedPassword } =
     req.body;
+  console.log('toto');
 
   database
     .query(
@@ -60,7 +61,7 @@ const postUsers = (req, res) => {
 };
 
 const getUsers = (req, res) => {
-  let sql = 'SELECT *, NULL as hashedPassword FROM users';
+  let sql = 'select firstname,  lastname,  email,  city,  language FROM users';
   const sqlValues = [];
 
   if (req.query.language != null) {
@@ -74,6 +75,7 @@ const getUsers = (req, res) => {
   database
     .query(sql, sqlValues)
     .then(([users]) => {
+      delete users.hashedPassword;
       res.json(users);
     })
     .catch((err) => {
