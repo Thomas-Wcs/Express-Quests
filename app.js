@@ -4,6 +4,8 @@ const app = express();
 
 const port = 5000;
 
+const { hashPassword } = require('./auth.js');
+
 const welcome = (req, res) => {
   res.send('Welcome dude, have fun :)');
 };
@@ -22,7 +24,7 @@ app.get('/api/users', userHandlers.getUsers);
 app.get('/api/users/:id', userHandlers.getUsersById);
 
 app.post('/api/movies', movieHandlers.postMovie);
-app.post('/api/users', userHandlers.postUsers);
+app.post('/api/users', hashPassword, userHandlers.postUsers);
 
 app.put('/api/movies/:id', movieHandlers.updateMovie);
 app.put('/api/users/:id', userHandlers.updateUser);
